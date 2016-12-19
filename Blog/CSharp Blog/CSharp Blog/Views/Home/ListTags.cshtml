@@ -1,0 +1,22 @@
+﻿@model List<CSharp_Blog.Models.Tag>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var tag in Model)
+        {
+            <div class="col-sm-6 text-center text-uppercase">
+                <p>
+                    <h2>
+                        @Html.ActionLink(string.Format($"{tag.Name} ({tag.Articles.Count})"),
+                        "ListArticles", "Home", new { @tagId = tag.Id }, null)
+                    </h2>
+                </p>
+            </div>
+        }
+    </div>
+</div>
+<hr />
