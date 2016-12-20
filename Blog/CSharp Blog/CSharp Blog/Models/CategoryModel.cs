@@ -24,7 +24,5 @@ namespace CSharp_Blog.Models
         public string Name { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
-
-
     }
 }

@@ -204,7 +204,6 @@ namespace CSharp_Blog.Controllers
                 model.Categories = database.Categories
                     .OrderBy(c => c.Name)
                     .ToList();
-
                 model.Tags = string.Join(",", article.Tags.Select(t => t.Name));
 
                 return View(model);
