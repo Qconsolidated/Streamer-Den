@@ -73,6 +73,8 @@ namespace CSharp_Blog.Controllers.Admin
                 viewModel.User = user;
                 viewModel.Roles = GetUserRoles(user, database);
 
+                
+
                 return View(viewModel);
             }
         }
