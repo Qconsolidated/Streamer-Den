@@ -10,9 +10,11 @@ namespace CSharp_Blog.Models
     public class Article
     {
         private ICollection<Tag> tags;
+        private ICollection<Comment> comments;
         public Article()
         {
             this.tags = new HashSet<Tag>();
+            this.comments = new HashSet<Comment>();
         }
 
         public Article (string authorId, string title, string content, int categoryId)
@@ -38,6 +40,9 @@ namespace CSharp_Blog.Models
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
+
+        [ForeignKey("Comments")]
+        public string Comments { get; set; }
 
         public virtual Category Category { get; set; }
 
