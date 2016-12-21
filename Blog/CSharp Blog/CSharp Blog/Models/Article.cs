@@ -24,6 +24,7 @@ namespace CSharp_Blog.Models
             this.Content = content;
             this.CategoryId = categoryId;
             this.tags = new HashSet<Tag>();
+            this.comments = new HashSet<Comment>();
         }
         [Key]
         public int Id { get; set; }
@@ -35,14 +36,15 @@ namespace CSharp_Blog.Models
         [Required]
         public string Content { get; set; }
 
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedDate { get; set; }
+
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-
-        [ForeignKey("Comments")]
-        public string Comments { get; set; }
 
         public virtual Category Category { get; set; }
 
@@ -53,6 +55,13 @@ namespace CSharp_Blog.Models
             get { return this.tags; }
             set { this.tags = value; }
         }
+
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
+        }
+
 
         public bool IsAuthor(string name)
         {

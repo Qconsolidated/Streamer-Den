@@ -44,6 +44,7 @@ namespace CSharp_Blog.Controllers
                 var article = database.Articles
                 .Where(a => a.Id == id)
                    .Include(a => a.Author)
+                   .Include(p => p.Comments)
                    .Include(a => a.Tags)
                    .First();
 
@@ -233,6 +234,48 @@ namespace CSharp_Blog.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public ActionResult Comment([Bind(Include = "commentId, name, message")] int commentId, string name, string message)
+        public ActionResult Comment([Bind(Include = "commentId, message")] int commentId, string message)
+        {
+            var database = new BlogDbContext();
+            Article article = database.Articles.Find(commentId);
+            Comment comment = new Comment();
+            comment.commentId = commentId;
+            comment.Email = User.Identity.Name;
+            comment.CreatedDate = DateTime.Now;
+            comment.Name = User.Identity.Name;
+            comment.Body = message;
+            //comment.Article_Id = article.Id;
+
+            article.Comments.Add(comment);
+            database.Comments.Add(comment);
+            database.SaveChanges();
+         
+            return RedirectToAction("");
+        }
+
+        [Authorize]
+        public ActionResult DeleteComment(int id)
+        {
+            using (var database = new BlogDbContext())
+            {
+                Comment comment = database.Comments.Find(id);
+                if (comment == null)
+                {
+                    return HttpNotFound();
+                }
+                Article article = database.Articles.Find(comment.commentId);
+                article.Comments.Remove(comment);
+                database.Comments.Remove(comment);
+                database.SaveChanges();
+
+                return RedirectToAction("");
+            }
         }
 
         private bool IsUserAuthorizedToEdit(Article article)

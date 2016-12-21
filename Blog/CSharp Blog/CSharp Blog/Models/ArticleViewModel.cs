@@ -23,7 +23,10 @@ namespace CSharp_Blog.Models
 
         public string Tags { get; set; }
 
+        
         public ICollection<Article> Articles { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        
         public List<Category> Categories { get; set; }
     }
 }
