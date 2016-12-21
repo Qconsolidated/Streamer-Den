@@ -44,8 +44,8 @@ namespace CSharp_Blog.Controllers
                 var article = database.Articles
                 .Where(a => a.Id == id)
                    .Include(a => a.Author)
-                   .Include(p => p.Comments)
                    .Include(a => a.Tags)
+                   .Include(p => p.Comments)                  
                    .First();
 
                 if (article == null)
@@ -82,9 +82,12 @@ namespace CSharp_Blog.Controllers
 
                     var authorId = database.Users
                         .Where(u => u.UserName == this.User.Identity.Name)
-                        .First().Id;
+                        .First()
+                        .Id;
 
                     var article = new Article(authorId, model.Title, model.Content, model.CategoryId);
+                    article.AuthorId = authorId;
+                    article.CreatedDate = DateTime.Now;
 
                     this.SetArticleTags(article, model, database);
 
@@ -113,9 +116,9 @@ namespace CSharp_Blog.Controllers
                 {
                     tag = new Tag() { Name = tagString };
                     db.Tags.Add(tag);
-
-                    article.Tags.Add(tag);
+                  
                 }
+                article.Tags.Add(tag);
             }
         }
 
@@ -205,7 +208,8 @@ namespace CSharp_Blog.Controllers
                 model.Categories = database.Categories
                     .OrderBy(c => c.Name)
                     .ToList();
-                model.Tags = string.Join(",", article.Tags.Select(t => t.Name));
+
+                model.Tags = string.Join(", ", article.Tags.Select(t => t.Name));
 
                 return View(model);
             }

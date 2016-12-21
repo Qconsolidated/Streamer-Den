@@ -25,7 +25,8 @@ namespace CSharp_Blog.Controllers.Admin
                     .Include(t => t.Articles.Select(a => a.Tags))
                     .Include(t => t.Articles.Select(a => a.Author))
                     .FirstOrDefault(t => t.Id == id)
-                    .Articles.ToList();
+                    .Articles
+                    .ToList();
 
                 return View(articles);
             }

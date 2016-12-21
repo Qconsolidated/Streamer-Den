@@ -23,7 +23,12 @@ namespace CSharp_Blog.Models
 
         public string Tags { get; set; }
 
-        
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Created Date")]
+        public DateTime CreatedDate { get; set; }
+
+
         public ICollection<Article> Articles { get; set; }
         public ICollection<Comment> Comments { get; set; }
         
