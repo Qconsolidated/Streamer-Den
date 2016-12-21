@@ -18,10 +18,19 @@
         <small class="author">
             --author @Model.Author.FullName
         </small>
-        <footer class="pull-right">
-            @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-            @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
-            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+        <footer>
+            <div class="pull-left">
+                @foreach (var tag in Model.Tags)
+                {
+                    @Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })
+                }
+            </div>
+             
+            <div class="pull-right">
+                @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+            </div>          
         </footer>
     </article>
 
