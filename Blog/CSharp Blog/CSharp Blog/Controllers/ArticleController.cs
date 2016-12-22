@@ -243,7 +243,7 @@ namespace CSharp_Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Comment([Bind(Include = "commentId, name, message")] int commentId, string name, string message)
+
         public ActionResult Comment([Bind(Include = "commentId, message")] int commentId, string message)
         {
             var database = new BlogDbContext();
@@ -254,7 +254,7 @@ namespace CSharp_Blog.Controllers
             comment.CreatedDate = DateTime.Now;
             comment.Name = User.Identity.Name;
             comment.Body = message;
-            //comment.Article_Id = article.Id;
+
 
             article.Comments.Add(comment);
             database.Comments.Add(comment);
